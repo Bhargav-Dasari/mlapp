@@ -1,6 +1,3 @@
-
-
-import os
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -9,7 +6,6 @@ from tensorflow.keras.preprocessing import image
 from tensorflow import expand_dims
 from tensorflow.keras.models import load_model
 from tensorflow.nn import softmax
-import pickle
 
 def reshape_and_normalize(images):
 
@@ -53,15 +49,3 @@ callbacks = myCallback()
 history = model.fit(training_images, training_labels, epochs=6, validation_data = (test_images,test_labels), verbose=1)
 
 model.save('mnist_model.keras')
-
-#image_path = get_file('image.jpg',origin= '/content/sample_data/RdEpj.png' )
-c = load_model('mnist_model.keras')
-img = image.load_img('/content/sample_data/Handwritten-digits-from-the-MNIST-data-set-5-If-f-denotes-the-image-of-the-handwritten.jpg', color_mode = 'grayscale', target_size = (28,28))
-img_array = image.img_to_array(img)
-img_array = expand_dims(img_array,0)
-normalized_image_data = img_array / 255.0
-
-a = c.predict(normalized_image_data)
-
-score = softmax(a[0])
-print(np.argmax(score))
