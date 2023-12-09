@@ -18,6 +18,7 @@ def reshape_and_normalize(images):
 (training_images, training_labels), (test_images,test_labels) = tf.keras.datasets.mnist.load_data()
 
 training_images = reshape_and_normalize(training_images)
+test_images = reshape_and_normalize(test_images)
 
 class myCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self,epoch, logs = {}):
@@ -46,6 +47,6 @@ model = convolutional_model()
 
 callbacks = myCallback()
 
-history = model.fit(training_images, training_labels, epochs=6, validation_data = (test_images,test_labels), verbose=1)
+history = model.fit(training_images, training_labels, epochs=6, validation_data = (test_images,test_labels), callbacks= [callbacks], verbose=1)
 
-model.save('mnist_model.keras')
+model.save('mnist_model.h5')
